@@ -2,7 +2,7 @@
 // @name         Open Google Search Results in New Tab
 // @name:zh-CN   Google 谷歌搜索结果以新标签页打开
 // @namespace    https://github.com/zkqiang
-// @version      1.0
+// @version      1.1
 // @description  Modify the Google search results link to open in a new tab
 // @description:zh-CN  将谷歌搜索结果的链接修改为以新标签页打开
 // @author       zkqiang
@@ -14,18 +14,22 @@
 (function () {
   'use strict';
 
-  function modify(element) {
+  function modify(selectors) {
     try {
-      var links = element.getElementsByTagName('a');
-      for (var i = 0; i < links.length; i++) {
-        links[i].target = '_blank';
+      var nodes = document.querySelectorAll(selectors);
+      for (var m = 0; m < nodes.length; m++) {
+        var links = nodes[m].getElementsByTagName('a');
+        for (var n = 0; n < links.length; n++) {
+          links[n].target = '_blank';
+        }
       }
     } catch (err) {
+      console.error('[tampermonkey-google-newtab] error: ' + err.toString())
     }
   }
 
-  modify(document.getElementById('res'));
-  modify(document.getElementById('bottomads'));
-  modify(document.getElementById('rhs'));
-  modify(document.getElementById('fsl'));
+  modify('#res');
+  modify('#bottomads');
+  modify('#rhs');
+  modify('#fsl');
 })();
